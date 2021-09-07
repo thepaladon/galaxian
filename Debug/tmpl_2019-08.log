@@ -1,0 +1,6 @@
+﻿  game.cpp
+C:\Users\angdo\source\repos\Galaxians\game.cpp(43,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\angdo\source\repos\Galaxians\game.cpp(43,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\angdo\source\repos\Galaxians\game.cpp(43,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\angdo\source\repos\Galaxians\game.cpp(43,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  tmpl_2019-08.vcxproj -> C:\Users\angdo\source\repos\Galaxians\tmpl_2019-08_x86_debug.exe
