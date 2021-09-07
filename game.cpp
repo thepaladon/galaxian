@@ -1,19 +1,21 @@
 #include "game.h"
 #include "surface.h"
 #include <cstdio> //printf
+#include <stdlib.h>
+#define NUMSTARS 100
+
+//256, 224 resolution of the original Galaxian screen
 
 namespace Tmpl8
 {
-	int starsX[50], starsY[50];
+	int starsX[NUMSTARS], starsY[NUMSTARS];
 	void Game::Init()
 	{
-
-		for (int x = 0; x < 50; x++) {
-			for (int y = 0; x < 50; y++) {
-				starsX[x] += x * y;
-				starsY[x] += x * y;
-			}
+		for (int i = 0; i < NUMSTARS; i++) {
+			starsX[i] = rand() % 256;
+			starsY[i] = rand() % 224;
 		}
+		
 	}
 	
 
@@ -24,7 +26,7 @@ namespace Tmpl8
 
 	static Sprite rotatingGun(new Surface("assets/aagun.tga"), 36);
 	static int frame = 0;
-	
+	int starTracker;
 
 	void Game::Tick(float deltaTime)
 	{
@@ -39,7 +41,7 @@ namespace Tmpl8
 		rotatingGun.Draw(screen, 100, 100);
 		if (++frame == 36) frame = 0;
 
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < NUMSTARS; i++) {
 			screen->Line(starsX[i], starsY[i], starsX[i], starsY[i], 0xfffffff);
 		}
 	}
