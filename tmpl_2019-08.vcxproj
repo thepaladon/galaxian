@@ -222,12 +222,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bullet.h" />
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
   </ItemGroup>

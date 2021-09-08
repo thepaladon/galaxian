@@ -8,6 +8,9 @@
     <ClCompile Include="template.cpp">
       <Filter>template code</Filter>
     </ClCompile>
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -17,6 +20,9 @@
     <ClInclude Include="template.h">
       <Filter>template code</Filter>
     </ClInclude>
+    <ClInclude Include="player.h" />
+    <ClInclude Include="bullet.h" />
+    <ClInclude Include="enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

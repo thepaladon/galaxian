@@ -1,0 +1,20 @@
+﻿  bullet.cpp
+  enemy.cpp
+  game.cpp
+C:\Users\angdo\source\repos\Galaxian\game.cpp(37,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\angdo\source\repos\Galaxian\game.cpp(37,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\angdo\source\repos\Galaxian\game.cpp(37,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\angdo\source\repos\Galaxian\game.cpp(37,17): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\angdo\source\repos\Galaxian\game.cpp(96,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\angdo\source\repos\Galaxian\game.cpp(97,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\angdo\source\repos\Galaxian\game.cpp(138,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\angdo\source\repos\Galaxian\game.cpp(140,29): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\angdo\source\repos\Galaxian\game.cpp(162,81): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\angdo\source\repos\Galaxian\game.cpp(162,64): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\angdo\source\repos\Galaxian\game.cpp(162,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\angdo\source\repos\Galaxian\game.cpp(162,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  player.cpp
+  surface.cpp
+  template.cpp
+  Generating Code...
+  tmpl_2019-08.vcxproj -> C:\Users\angdo\source\repos\Galaxian\tmpl_2019-08_x86.exe

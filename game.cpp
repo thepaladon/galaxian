@@ -2,6 +2,9 @@
 #include "surface.h"
 #include "template.h"
 
+#include "player.h"
+#include "enemy.h"
+#include "bullet.h"
 
 #include <cstdio> 
 #include <windows.h>
@@ -12,6 +15,10 @@
 #define NUMSTARS 100
 
 //256, 224 resolution of the original Galaxian screen
+// Player Resolution: 30 x 13
+// Enemy Resolution: 11 x 8
+//Bullet Resolution 1 x 6
+
 
 class Star
 {
@@ -60,148 +67,8 @@ private:
 
 };
 
-class Player
-{
-public:
-	Player()
-	{
-		int x = 100;
-		int y = 200;
-	}
-
-	void PlayerControlLeft()
-	{
-		x--;
-	}
-	void PlayerControlRight()
-	{
-		x++;
-	}
-
-	void DrawPlayer(Tmpl8::Surface* screen) {
-		KeepPlayerInside();
-	}
-
-	void KeepPlayerInside() {
-		if (x < 10) {
-			x = 10;
-		}
-
-		if (x > 246) {
-			x = 246;
-		}
-	}
-
-	int getX() const { return x; }
-	int getY() const { return y; }
 
 
-private:
-	int x = 100;
-	int y = 200;
-};
-
-class Bullet {
-public:
-	Bullet()
-	{
-		bulletState = 1;
-		fireReady = true;
-	}
-
-	void BulletMechanics(int playerX, int playerY, int enemyX, int enemyY) {
-		
-		switch(bulletState) {
-		case 1: BulletFollowPlayer(playerX, playerY);
-			break;
-		case 2: BulletFired(enemyX, enemyY);
-			break;
-		}
-	}
-
-	void BulletFired(int enemyX, int enemyY) {
-		fireReady = false;
-
-		y--;
-		printf("Fire");
-
-		if (y < 0) {
-			bulletState = 1;
-			fireReady = true;
-		}
-
-		//if (x < enemyX + rect2.width &&
-		//	rect1.x + rect1.width > rect2.x &&
-		//	rect1.y < rect2.y + rect2.height &&
-		//	rect1.y + rect1.height > rect2.y) {
-		//	// collision detected!
-		//}
-
-	}
-
-	void BulletDraw(Tmpl8::Surface* screen) {
-		screen->Box(x, y-1, x, y+4, 0xffff00);
-	}
-
-	void BulletFollowPlayer(int playerX, int playerY) {
-		x = playerX + 6;
-		y = playerY;
-		fireReady = true;
-	}
-
-	void SetBulletState(int i) { if (fireReady) bulletState = i; }
-
-	int getX() const { return x; }
-	int getY() const { return y; }
-
-private:
-	int x, y;
-	int bulletState = 1; // 1 - follows player; 2 - is firing; 3 - is reseting;
-	bool fireReady = true;
-};
-
-class Enemy {
-public:
-	Enemy() {
-		x = 100;
-		y = 20;
-		stateOfEnemy = 1;
-		directionGoingLeft = true;
-	}
-
-	void DrawEnemy(Tmpl8::Surface* screen) {
-		screen->Box(x - 8, y - 8, x + 8, y + 8, 0xff00ff);
-	}
-
-	void IdleAnimation(bool directionGoingRight, int max) {
-		if (directionGoingRight) 
-			x++;
-		else if (!directionGoingRight) 
-			x--;
-	}
-
-	void EnemyMechanics(bool directionGoing, int max) {
-		switch (stateOfEnemy) {
-		case 1: IdleAnimation(directionGoing, max);
-			break;
-		case 2: 
-			break;
-		}
-
-	}
-
-	void SetCoords(int Ex, int Wy) { x = Ex; Wy = y; }
-	int GetX() { return x; }
-	int GetY() { return y; }
-	
-
-private:
-	int x, y;
-	int stateOfEnemy; // 1 - idle in group, 2 - attacking
-	int directionGoingLeft = true;
-	bool enemyDead;
-
-};
 
 namespace Tmpl8
 {
@@ -241,7 +108,7 @@ namespace Tmpl8
 	{
 		//Initialising green enemies
 		for (int i = 0; i < 10; i++) {
-			enemy[i].SetCoords(28 + i * 20, 20);
+			enemy[i].SetCoords(maxMovementOfEnemyCluster+ i * 15, 20);
 		}
 	}
 	
@@ -251,9 +118,8 @@ namespace Tmpl8
 	}
 
 	static Sprite playerAsset(new Surface("assets/galaxianship.png"), 1);
+	static Sprite greenEnemy(new Surface("assets/greenenemy.png"), 1);
 
-
-	
 	//This works but it's way slower and also ignores the SPACE key [it only allows for one input]
 	/*void Game::KeyDown(int key) {
 
@@ -291,10 +157,12 @@ namespace Tmpl8
 
 		EnemyCheck();
 		for (int i = 0; i < 10; i++) {
-			enemy[i].DrawEnemy(screen);
-			enemy[i].EnemyMechanics(directionGoingRight, maxMovementOfEnemyCluster);
-			bullet.BulletMechanics(player.getX(), player.getY(), enemy[i].GetX(), enemy[i].GetY());
-
+			if (!enemy[i].GetAliveState()) {
+				enemy[i].EnemyMechanics(directionGoingRight, maxMovementOfEnemyCluster);
+				greenEnemy.Draw(screen, enemy[i].GetX(), enemy[i].GetY());
+				//screen->Line(enemy[i].GetX(), enemy[i].GetY(), enemy[i].GetX(), enemy[i].GetY(), 0xff0000);
+			}
+			bullet.BulletMechanics(player.getX(), player.getY(), enemy[i].GetX(), enemy[i].GetY(), enemy[i].SetDeath(true));
 		}
 
 		//Temporary solution
@@ -308,7 +176,7 @@ namespace Tmpl8
 		bullet.BulletDraw(screen);
 
 
-		Sleep(10);
+		Sleep(20);
 
 		
 	}
