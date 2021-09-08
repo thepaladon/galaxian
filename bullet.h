@@ -6,11 +6,14 @@ class Bullet
 public:
 	Bullet();
 	~Bullet(); //to clean up when a class dies
-	void BulletMechanics(int playerX, int playerY, int enemyX, int enemyY, bool enemyDeath);
-	void BulletFired(int enemyX, int enemyY, bool enemyDeath);
+	void BulletMechanics(int playerX, int playerY);
+	void BulletFired();
 	void BulletDraw(Tmpl8::Surface * screen);
 	void BulletFollowPlayer(int playerX, int playerY);
 	void SetBulletState(int i);
+	void ResetAfterHit(int i);
+
+	bool SetFireReady(bool readyAgain);
 	int getX();
 	int getY();
 

@@ -1,3 +1,4 @@
+#include "bullet.h"
 
 namespace Tmpl8 {
 	class Enemy
@@ -7,6 +8,7 @@ namespace Tmpl8 {
 		~Enemy();
 		void IdleAnimation(bool directionGoingRight, int max);
 		void EnemyMechanics(bool directionGoing, int max);
+		void EnemyCollision(Bullet* bullet);
 		void SetCoords(int Ex, int Wy);
 
 		bool SetDeath(bool death); 

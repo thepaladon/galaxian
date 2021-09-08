@@ -1,4 +1,6 @@
 #include "enemy.h"
+#include "bullet.h"
+#include <stdio.h>
 using namespace Tmpl8;
 
 	Enemy::Enemy() {
@@ -27,13 +29,21 @@ using namespace Tmpl8;
 
 	}
 
-	void Enemy::SetCoords(int Ex, int Wy) { x = Ex; Wy = y; }
+	
+	void Enemy::EnemyCollision(Bullet* bullet) {
 
-	bool Enemy::SetDeath(bool death) 
-	{ 
-	enemyDead = death; 
-	return death;
+		if (bullet->getX()< x + 10 &&
+			bullet->getX() > x &&
+			bullet->getY() - 2 < y + 7 &&
+			bullet->getY() + 2 > y)
+		{
+			enemyDead = true;
+			bullet->ResetAfterHit(1);
+			printf("hit");
+		}
 	}
+
+	void Enemy::SetCoords(int Ex, int Wy) { x = Ex; Wy = y; }
 	
 	bool Enemy::GetAliveState() { return enemyDead; }
 

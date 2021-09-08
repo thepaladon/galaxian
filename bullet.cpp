@@ -12,19 +12,19 @@ using namespace Tmpl8;
 
 	Bullet::~Bullet() {};
 
-	void Bullet::BulletMechanics(int playerX, int playerY, int enemyX, int enemyY, bool enemyDeath) {
+	void Bullet::BulletMechanics(int playerX, int playerY) {
 
 		switch (bulletState) {
 		case 1: BulletFollowPlayer(playerX, playerY);
 			break;
-		case 2: BulletFired(enemyX, enemyY, enemyDeath);
+		case 2: BulletFired();
 			break;
 		}
 	}
 
-	void Bullet::BulletFired(int enemyX, int enemyY, bool enemyDeath) {
+	void Bullet::BulletFired(){
+		
 		fireReady = false;
-
 		y--;
 		printf("Fire");
 
@@ -36,16 +36,8 @@ using namespace Tmpl8;
 		// Enemy Resolution: 11 x 8
 		//Bullet Resolution 1 x 6
 
-		if (x < enemyX + 10 &&
-			x  > enemyX &&
-			y - 2 < enemyY + 7 &&
-			y + 2 > enemyY)
-		{
-			enemyDeath = true;
-			printf("hit");
-		}
-
 	}
+
 
 	void Bullet::BulletDraw(Tmpl8::Surface* screen) {
 
@@ -58,7 +50,12 @@ using namespace Tmpl8;
 			fireReady = true;
 	}
 
-	void Bullet::SetBulletState(int i) { if (fireReady) bulletState = i; }
+	void Bullet::ResetAfterHit(int i) {
+		fireReady = true;
+		SetBulletState(i);
+	}
+ 
+ 	 void Bullet::SetBulletState(int i) { if (fireReady) bulletState = i; }
 
 	int Bullet::getX() { return x; }
 	int Bullet::getY() { return y; }

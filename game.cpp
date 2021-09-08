@@ -158,12 +158,18 @@ namespace Tmpl8
 		EnemyCheck();
 		for (int i = 0; i < 10; i++) {
 			if (!enemy[i].GetAliveState()) {
+				enemy[i].EnemyCollision(&bullet);
 				enemy[i].EnemyMechanics(directionGoingRight, maxMovementOfEnemyCluster);
 				greenEnemy.Draw(screen, enemy[i].GetX(), enemy[i].GetY());
-				//screen->Line(enemy[i].GetX(), enemy[i].GetY(), enemy[i].GetX(), enemy[i].GetY(), 0xff0000);
+				screen->Line(enemy[i].GetX(), enemy[i].GetY(), enemy[i].GetX(), enemy[i].GetY(), 0xff0000);
 			}
-			bullet.BulletMechanics(player.getX(), player.getY(), enemy[i].GetX(), enemy[i].GetY(), enemy[i].SetDeath(true));
+			bullet.BulletMechanics(player.getX(), player.getY());
 		}
+
+		int a = 10;
+		int* b = &a;
+		int** c = &b;
+		printf("%i", **c);
 
 		//Temporary solution
 		if (GetAsyncKeyState(VK_LEFT)) player.PlayerControlLeft();
