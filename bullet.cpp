@@ -26,7 +26,6 @@ using namespace Tmpl8;
 		
 		fireReady = false;
 		y--;
-		printf("Fire");
 
 		if (y < 0) {
 			bulletState = 1;

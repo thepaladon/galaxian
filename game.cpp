@@ -13,6 +13,7 @@
 #include <cstdio> //printf
 
 #define NUMSTARS 100
+#define NUMENEMIES 30
 
 //256, 224 resolution of the original Galaxian screen
 // Player Resolution: 30 x 13
@@ -67,9 +68,6 @@ private:
 
 };
 
-
-
-
 namespace Tmpl8
 {
 	int timeElapsed;
@@ -82,7 +80,7 @@ namespace Tmpl8
 	Star stars[NUMSTARS];
 	Player player;
 	Bullet bullet;
-	Enemy enemy[10];
+	Enemy enemy[NUMENEMIES];
 	static int frame = 0;
 
 	int m = -16;
@@ -107,8 +105,18 @@ namespace Tmpl8
 	void Game::Init()
 	{
 		//Initialising green enemies
-		for (int i = 0; i < 10; i++) {
-			enemy[i].SetCoords(maxMovementOfEnemyCluster+ i * 15, 20);
+		int ex = 1;
+		int wy = 1; 
+
+		for (int i = 0; i < NUMENEMIES; i++) {
+			
+			if(i % 10 == 0) {
+				wy = wy + 1;
+				ex = 1;
+			}
+			printf("%i %i %i \n", i, ex, wy);
+			enemy[i].SetCoords(maxMovementOfEnemyCluster + ex * 15, wy * 10 );
+			ex = ex + 1;
 		}
 	}
 	
@@ -156,41 +164,42 @@ namespace Tmpl8
 		player.DrawPlayer(screen);
 
 		EnemyCheck();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < NUMENEMIES; i++) {
 			if (!enemy[i].GetAliveState()) {
 				enemy[i].EnemyCollision(&bullet);
 				enemy[i].EnemyMechanics(directionGoingRight, maxMovementOfEnemyCluster);
 				greenEnemy.Draw(screen, enemy[i].GetX(), enemy[i].GetY());
 				screen->Line(enemy[i].GetX(), enemy[i].GetY(), enemy[i].GetX(), enemy[i].GetY(), 0xff0000);
 			}
-			bullet.BulletMechanics(player.getX(), player.getY());
 		}
 
-		int a = 10;
+		for(int i =0; i < 10; i++)
+		bullet.BulletMechanics(player.getX(), player.getY());
+
+		// Neat pointer explanation by Phil
+		/*int a = 10;
 		int* b = &a;
 		int** c = &b;
-		printf("%i", **c);
+		printf("%i", **c);*/
 
 		//Temporary solution
 		if (GetAsyncKeyState(VK_LEFT)) player.PlayerControlLeft();
 		if (GetAsyncKeyState(VK_RIGHT)) player.PlayerControlRight();
-
-		printf("%i \n", maxMovementOfEnemyCluster);
-
 		if (GetAsyncKeyState(VK_SPACE)) bullet.SetBulletState(2);
 
 		bullet.BulletDraw(screen);
 
 
-		Sleep(20);
-
+		Sleep(10);
+		printf("Enemy 0 Coords: %i %i \n", enemy[0].GetX(), enemy[0].GetY());
 		
 	}
 
 	void EnemyCheck() {
 		int mostLeftX = 100;
 		int mostRightX = 100;
-		for (int i = 0; i < 10; i++) {
+
+		for (int i = 0; i < NUMENEMIES; i++) {
 			if (enemy[i].GetX() < mostLeftX) {
 				mostLeftX = enemy[i].GetX();
 			}

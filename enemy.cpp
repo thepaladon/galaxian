@@ -4,8 +4,7 @@
 using namespace Tmpl8;
 
 	Enemy::Enemy() {
-		x = 100;
-		y = 20;
+		
 		stateOfEnemy = 1;
 		directionGoingLeft = true;
 	
@@ -39,11 +38,10 @@ using namespace Tmpl8;
 		{
 			enemyDead = true;
 			bullet->ResetAfterHit(1);
-			printf("hit");
 		}
 	}
 
-	void Enemy::SetCoords(int Ex, int Wy) { x = Ex; Wy = y; }
+	void Enemy::SetCoords(int Ex, int Wy) { x = Ex; y = Wy; }
 	
 	bool Enemy::GetAliveState() { return enemyDead; }
 
