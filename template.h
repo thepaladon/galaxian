@@ -19,6 +19,7 @@ constexpr int ScreenHeight = 224;
 
 static const char* TemplateVersion = "Template_v2019.08";
 
+
 //SIMD Intrinsics headers.
 //#include "emmintrin.h"
 //#include "immintrin.h"
