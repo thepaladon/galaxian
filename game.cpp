@@ -13,7 +13,7 @@
 #include <cstdio> //printf
 
 #define NUMSTARS 100
-#define NUMENEMIES 30
+#define NUMENEMIES 50
 
 //256, 224 resolution of the original Galaxian screen
 // Player Resolution: 30 x 13
@@ -70,8 +70,8 @@ private:
 
 namespace Tmpl8
 {
-	int timeElapsed;
-	int timer;
+	float timeElapsed;
+	float timer = 10000; //10 seconds?
 
 	int maxMovementOfEnemyCluster = 28; //those variables refer to the end points to which the enemies are allowed to move.
 	 //one there are fewer enemies there are allowed to move moree to the right and left.
@@ -95,9 +95,9 @@ namespace Tmpl8
 			int finaly = y - r * cosf(r1);
 			m++;
 
-			if (m > 16) {
+			/*if (m > 16) {	
 				m = -16;
-			}
+			}*/
 
 			s->Box(finalx - 5, finaly - 5, finalx + 5, finaly + 5, 0xFFFFFf);
 	}
@@ -106,7 +106,7 @@ namespace Tmpl8
 	{
 		//Initialising green enemies
 		int ex = 1;
-		int wy = 1; 
+		int wy = 3; 
 
 		for (int i = 0; i < NUMENEMIES; i++) {
 			
@@ -114,7 +114,7 @@ namespace Tmpl8
 				wy = wy + 1;
 				ex = 1;
 			}
-			printf("%i %i %i \n", i, ex, wy);
+			//printf("%i %i %i \n", i, ex, wy);
 			enemy[i].SetCoords(maxMovementOfEnemyCluster + ex * 15, wy * 10 );
 			ex = ex + 1;
 		}
@@ -146,7 +146,7 @@ namespace Tmpl8
 		srand(time(NULL));
 
 		timeElapsed = timeElapsed + deltaTime;
-		
+
 		screen->Clear(0);
 
 		screen->Print("hello world", 2, 2, 0xffffff);
@@ -156,24 +156,33 @@ namespace Tmpl8
 			stars[i].StarUpdate(screen);
 			stars[i].StarTimer(timeElapsed);
 		}
-		Circle(screen, 50, 50, 50);
+		Circle(screen, 50, 50, 10);
 		if (GetAsyncKeyState(VK_CONTROL)) m++;
 
 		playerAsset.Draw(screen, player.getX(), player.getY());
-
 		player.DrawPlayer(screen);
 
 		EnemyCheck();
 		for (int i = 0; i < NUMENEMIES; i++) {
 			if (!enemy[i].GetAliveState()) {
 				enemy[i].EnemyCollision(&bullet);
-				enemy[i].EnemyMechanics(directionGoingRight, maxMovementOfEnemyCluster);
 				greenEnemy.Draw(screen, enemy[i].GetX(), enemy[i].GetY());
-				screen->Line(enemy[i].GetX(), enemy[i].GetY(), enemy[i].GetX(), enemy[i].GetY(), 0xff0000);
 			}
+			enemy[i].SetTarget(screen);
+			enemy[i].SetEnemyTime(timeElapsed);
+			enemy[i].EnemyMechanics(directionGoingRight, maxMovementOfEnemyCluster);
+		}
+		
+		timeElapsed = deltaTime + timeElapsed;
+		printf("%f \n", timeElapsed);
+
+		if (timeElapsed > timer) {
+			timer = timer + timer;
+			printf("Five Seconds");
 		}
 
-		for(int i =0; i < 10; i++)
+		//This is a horrible way to do this...
+		for(int i =0; i < 5; i++)
 		bullet.BulletMechanics(player.getX(), player.getY());
 
 		// Neat pointer explanation by Phil
@@ -189,9 +198,8 @@ namespace Tmpl8
 
 		bullet.BulletDraw(screen);
 
-
-		Sleep(10);
-		printf("Enemy 0 Coords: %i %i \n", enemy[0].GetX(), enemy[0].GetY());
+		Sleep(0);
+		//printf("Enemy 0 Coords: %i %i \n", enemy[0].GetX(), enemy[0].GetY());
 		
 	}
 

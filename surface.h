@@ -46,7 +46,7 @@ public:
 	// member data access
 	Pixel* GetBuffer() { return m_Buffer; }
 	void SetBuffer( Pixel* a_Buffer ) { m_Buffer = a_Buffer; }
-	int GetWidth() { return m_Width; }
+	int GetWidth()	 { return m_Width; }
 	int GetHeight() { return m_Height; }
 	int GetPitch() { return m_Pitch; }
 	void SetPitch( int a_Pitch ) { m_Pitch = a_Pitch; }

@@ -1,6 +1,8 @@
 #include "player.h"
 #include "surface.h"
 
+using namespace Tmpl8;
+
 	Player::Player()
 	{
 		int x = 100;
